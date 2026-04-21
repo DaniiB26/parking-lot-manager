@@ -1,12 +1,19 @@
 package model;
 
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
+import state.ActiveTicketState;
+import state.TicketState;
 
+@Getter
 public class ParkingTicket {
     private UUID id;
     private Vehicle vehicle;
     private LocalDateTime entryTime;
+    private TicketState state;
+
 
     public ParkingTicket(Vehicle vehicle, LocalDateTime entryTime) {
         if (vehicle == null) {
@@ -20,17 +27,22 @@ public class ParkingTicket {
         this.id = UUID.randomUUID();
         this.vehicle = vehicle;
         this.entryTime = entryTime;
+        this.state = new ActiveTicketState();
     }
 
-    public UUID getId() {
-        return id;
+    public void pay() {
+        state.pay(this);
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+    public void close() {
+        state.close(this);
     }
 
-    public LocalDateTime getEntryTime() {
-        return entryTime;
+    public String getStateName() {
+        return state.getName();
+    }
+
+    public void setState(TicketState state) {
+        this.state = state;
     }
 }
