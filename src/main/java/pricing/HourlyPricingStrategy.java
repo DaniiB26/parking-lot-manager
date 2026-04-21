@@ -17,7 +17,7 @@ public class HourlyPricingStrategy implements PricingStrategy {
     }
 
     @Override
-    public double calculatePrice(ParkingTicket ticket, LocalDateTime exitTime) {
+    public Double calculatePrice(ParkingTicket ticket, LocalDateTime exitTime) {
         if (ticket == null) {
             throw new IllegalArgumentException("Ticket is required.");
         }
