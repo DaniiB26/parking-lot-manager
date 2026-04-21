@@ -15,11 +15,11 @@ public class HourlyPricingStrategyTest {
         Vehicle vehicle = new Vehicle("B 123 ABC");
         ParkingTicket ticket = new ParkingTicket(vehicle, LocalDateTime.of(2026, 4, 20, 10, 0));
 
-        PricingStrategy pricingStrategy = new HourlyPricingStrategy(10);
+        PricingStrategy pricingStrategy = new HourlyPricingStrategy(10.0);
 
-        double price = pricingStrategy.calculatePrice(ticket, LocalDateTime.of(2026, 4, 20, 11, 30));
+        Double price = pricingStrategy.calculatePrice(ticket, LocalDateTime.of(2026, 4, 20, 11, 30));
 
-        assertEquals(price, 20.0);
+        assertEquals(price, Double.valueOf(20.0));
     }
 
     @Test
@@ -30,13 +30,13 @@ public class HourlyPricingStrategyTest {
                 LocalDateTime.of(2026, 4, 20, 10, 0)
         );
 
-        PricingStrategy pricingStrategy = new HourlyPricingStrategy(10);
+        PricingStrategy pricingStrategy = new HourlyPricingStrategy(10.0);
 
-        double price = pricingStrategy.calculatePrice(
+        Double price = pricingStrategy.calculatePrice(
                 ticket,
                 LocalDateTime.of(2026, 4, 20, 10, 25)
         );
 
-        assertEquals(price, 10.0);
+        assertEquals(price, Double.valueOf(10.0));
     }
 }

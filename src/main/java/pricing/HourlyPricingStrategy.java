@@ -6,10 +6,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class HourlyPricingStrategy implements PricingStrategy {
-    private double hourlyRate;
+    private Double hourlyRate;
 
-    public HourlyPricingStrategy(double hourlyRate) {
-        if (hourlyRate <= 0) {
+    public HourlyPricingStrategy(Double hourlyRate) {
+        if (hourlyRate == null || hourlyRate <= 0) {
             throw new IllegalArgumentException("Hourly rate must be positive.");
         }
 
