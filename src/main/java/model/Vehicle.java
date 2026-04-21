@@ -1,5 +1,8 @@
 package model;
 
+import lombok.Getter;
+
+@Getter
 public class Vehicle {
     private String licensePlate;
 
@@ -9,9 +12,5 @@ public class Vehicle {
         }
 
         this.licensePlate = licensePlate.trim().toUpperCase();
-    }
-
-    public String getLicensePlate() {
-        return licensePlate;
     }
 }
