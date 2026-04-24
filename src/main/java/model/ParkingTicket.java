@@ -1,12 +1,14 @@
 package model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import state.ActiveTicketState;
 import state.TicketState;
 
 @Getter
+@Setter
 public class ParkingTicket {
     private Integer id;
     private Vehicle vehicle;
