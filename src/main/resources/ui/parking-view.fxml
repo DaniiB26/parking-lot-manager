@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
@@ -27,9 +28,13 @@
                 <TextField fx:id="ticketIdField" promptText="1"
                            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-                <Label text="Exit time (optional)" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <Label text="Pricing" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <ComboBox fx:id="pricingStrategyComboBox" prefWidth="180.0"
+                          GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="Exit time (optional)" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
                 <TextField fx:id="exitTimeField" promptText="24.04.2026 14:30"
-                           GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                           GridPane.columnIndex="1" GridPane.rowIndex="3"/>
             </GridPane>
             <HBox spacing="8.0">
                 <Button text="Enter Parking" onAction="#onEnterParking"/>

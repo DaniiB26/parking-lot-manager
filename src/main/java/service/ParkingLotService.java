@@ -48,6 +48,14 @@ public class ParkingLotService {
         return parkingTicketRepository.findAll();
     }
 
+    public void setPricingStrategy(PricingStrategy pricingStrategy) {
+        if (pricingStrategy == null) {
+            throw new IllegalArgumentException("Pricing strategy is required.");
+        }
+
+        this.pricingStrategy = pricingStrategy;
+    }
+
     private ParkingTicket getTicketOrThrow(Integer ticketId) {
         return parkingTicketRepository
                 .findById(ticketId)

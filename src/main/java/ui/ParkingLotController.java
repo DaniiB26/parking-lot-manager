@@ -2,11 +2,15 @@ package ui;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.ParkingTicket;
+import pricing.DailyPricingStrategy;
 import pricing.HourlyPricingStrategy;
+import pricing.NightDiscountPricingStrategy;
+import pricing.PricingStrategy;
 import repository.InMemoryParkingTicketRepository;
 import service.ParkingLotService;
 
@@ -29,6 +33,9 @@ public class ParkingLotController {
     private TextField exitTimeField;
 
     @FXML
+    private ComboBox<String> pricingStrategyComboBox;
+
+    @FXML
     private ListView<String> ticketsListView;
 
     @FXML
@@ -41,6 +48,12 @@ public class ParkingLotController {
 
     @FXML
     public void initialize() {
+        pricingStrategyComboBox.setItems(FXCollections.observableArrayList(
+                "Hourly",
+                "Daily",
+                "Night Discount"
+        ));
+        pricingStrategyComboBox.setValue("Hourly");
         refreshTickets();
         resultLabel.setText("Ready");
     }
@@ -62,6 +75,7 @@ public class ParkingLotController {
         try {
             Integer ticketId = parseTicketId();
             LocalDateTime exitTime = parseExitTime();
+            service.setPricingStrategy(createSelectedPricingStrategy());
             Double price = service.calculatePrice(ticketId, exitTime);
             resultLabel.setText("Price: " + price);
         } catch (Exception ex) {
@@ -105,6 +119,20 @@ public class ParkingLotController {
         }
 
         return Integer.parseInt(ticketIdField.getText().trim());
+    }
+
+    private PricingStrategy createSelectedPricingStrategy() {
+        String selectedStrategy = pricingStrategyComboBox.getValue();
+
+        if ("Daily".equals(selectedStrategy)) {
+            return new DailyPricingStrategy(50.0);
+        }
+
+        if ("Night Discount".equals(selectedStrategy)) {
+            return new NightDiscountPricingStrategy(10.0, 50.0);
+        }
+
+        return new HourlyPricingStrategy(10.0);
     }
 
     private LocalDateTime parseExitTime() {
