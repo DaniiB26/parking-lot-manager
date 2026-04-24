@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -33,7 +32,7 @@ public class InMemoryParkingTicketRepositoryTest {
     public void findById_unknownId_returnsEmptyOptional() {
         InMemoryParkingTicketRepository repository = new InMemoryParkingTicketRepository();
 
-        Optional<ParkingTicket> foundTicket = repository.findById(UUID.randomUUID());
+        Optional<ParkingTicket> foundTicket = repository.findById(999);
 
         assertFalse(foundTicket.isPresent());
     }

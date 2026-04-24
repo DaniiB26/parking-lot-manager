@@ -24,7 +24,7 @@
                            GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
                 <Label text="Ticket ID" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="ticketIdField" promptText="UUID"
+                <TextField fx:id="ticketIdField" promptText="1"
                            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
                 <Label text="Exit time (optional)" GridPane.columnIndex="0" GridPane.rowIndex="2"/>

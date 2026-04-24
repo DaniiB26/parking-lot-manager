@@ -7,7 +7,6 @@ import repository.InMemoryParkingTicketRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -58,7 +57,7 @@ public class ParkingLotServiceTest {
 
         expectThrows(
                 IllegalArgumentException.class,
-                () -> service.calculatePrice(UUID.randomUUID(), LocalDateTime.now())
+                () -> service.calculatePrice(999, LocalDateTime.now())
         );
     }
 
@@ -99,7 +98,7 @@ public class ParkingLotServiceTest {
         InMemoryParkingTicketRepository repository = new InMemoryParkingTicketRepository();
         ParkingLotService service = new ParkingLotService(repository, new HourlyPricingStrategy(10.0));
 
-        expectThrows(IllegalArgumentException.class, () -> service.payTicket(UUID.randomUUID()));
+        expectThrows(IllegalArgumentException.class, () -> service.payTicket(999));
     }
 
     @Test

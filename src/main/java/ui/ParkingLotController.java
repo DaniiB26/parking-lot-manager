@@ -13,7 +13,6 @@ import service.ParkingLotService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.UUID;
 
 public class ParkingLotController {
 
@@ -58,7 +57,7 @@ public class ParkingLotController {
     @FXML
     private void onCalculatePrice() {
         try {
-            UUID ticketId = parseTicketId();
+            Integer ticketId = parseTicketId();
             LocalDateTime exitTime = parseExitTime();
             Double price = service.calculatePrice(ticketId, exitTime);
             resultLabel.setText("Price: " + price);
@@ -70,7 +69,7 @@ public class ParkingLotController {
     @FXML
     private void onPayTicket() {
         try {
-            UUID ticketId = parseTicketId();
+            Integer ticketId = parseTicketId();
             ParkingTicket ticket = service.payTicket(ticketId);
             resultLabel.setText("Ticket state: " + ticket.getStateName());
             refreshTickets();
@@ -82,7 +81,7 @@ public class ParkingLotController {
     @FXML
     private void onCloseTicket() {
         try {
-            UUID ticketId = parseTicketId();
+            Integer ticketId = parseTicketId();
             ParkingTicket ticket = service.closeTicket(ticketId);
             resultLabel.setText("Ticket state: " + ticket.getStateName());
             refreshTickets();
@@ -97,12 +96,12 @@ public class ParkingLotController {
         resultLabel.setText("Ticket list refreshed");
     }
 
-    private UUID parseTicketId() {
+    private Integer parseTicketId() {
         if (ticketIdField.getText() == null || ticketIdField.getText().isBlank()) {
             throw new IllegalArgumentException("Ticket id is required.");
         }
 
-        return UUID.fromString(ticketIdField.getText().trim());
+        return Integer.parseInt(ticketIdField.getText().trim());
     }
 
     private LocalDateTime parseExitTime() {

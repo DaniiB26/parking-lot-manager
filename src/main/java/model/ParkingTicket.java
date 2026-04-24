@@ -3,13 +3,12 @@ package model;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 import state.ActiveTicketState;
 import state.TicketState;
 
 @Getter
 public class ParkingTicket {
-    private UUID id;
+    private Integer id;
     private Vehicle vehicle;
     private LocalDateTime entryTime;
     private TicketState state;
@@ -24,7 +23,6 @@ public class ParkingTicket {
             throw new IllegalArgumentException("Entry time is required.");
         }
 
-        this.id = UUID.randomUUID();
         this.vehicle = vehicle;
         this.entryTime = entryTime;
         this.state = new ActiveTicketState();
@@ -42,7 +40,11 @@ public class ParkingTicket {
         return state.getName();
     }
 
-    public void setState(TicketState state) {
+    public void changeState(TicketState state) {
+        if (state == null) {
+            throw new IllegalArgumentException("State is required.");
+        }
+
         this.state = state;
     }
 }

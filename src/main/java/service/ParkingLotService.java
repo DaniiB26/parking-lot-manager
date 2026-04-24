@@ -2,7 +2,6 @@ package service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import model.ParkingTicket;
@@ -23,13 +22,13 @@ public class ParkingLotService {
         return parkingTicketRepository.save(ticket);
     }
 
-    public Double calculatePrice(UUID ticketId, LocalDateTime exitTime) {
+    public Double calculatePrice(Integer ticketId, LocalDateTime exitTime) {
         ParkingTicket ticket = getTicketOrThrow(ticketId);
 
         return pricingStrategy.calculatePrice(ticket, exitTime);
     }
 
-    public ParkingTicket payTicket(UUID ticketId) {
+    public ParkingTicket payTicket(Integer ticketId) {
         ParkingTicket ticket = getTicketOrThrow(ticketId);
 
         ticket.pay();
@@ -37,7 +36,7 @@ public class ParkingLotService {
         return parkingTicketRepository.save(ticket);
     }
 
-    public ParkingTicket closeTicket(UUID ticketId) {
+    public ParkingTicket closeTicket(Integer ticketId) {
         ParkingTicket ticket = getTicketOrThrow(ticketId);
 
         ticket.close();
@@ -49,7 +48,7 @@ public class ParkingLotService {
         return parkingTicketRepository.findAll();
     }
 
-    private ParkingTicket getTicketOrThrow(UUID ticketId) {
+    private ParkingTicket getTicketOrThrow(Integer ticketId) {
         return parkingTicketRepository
                 .findById(ticketId)
                 .orElseThrow(() -> new IllegalArgumentException("Ticket not found!"));
