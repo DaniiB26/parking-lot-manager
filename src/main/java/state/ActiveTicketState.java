@@ -6,7 +6,7 @@ public class ActiveTicketState implements TicketState {
 
     @Override
     public void pay(ParkingTicket ticket) {
-        ticket.setState(new PaidTicketState());
+        ticket.changeState(new PaidTicketState());
     }
 
     @Override

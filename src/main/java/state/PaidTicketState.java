@@ -11,7 +11,7 @@ public class PaidTicketState implements TicketState {
 
     @Override
     public void close(ParkingTicket ticket) {
-        ticket.setState(new ClosedTicketState());
+        ticket.changeState(new ClosedTicketState());
     }
 
     @Override
