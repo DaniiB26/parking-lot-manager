@@ -28,7 +28,7 @@
                            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
                 <Label text="Exit time (optional)" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <TextField fx:id="exitTimeField" promptText="yyyy-MM-ddTHH:mm"
+                <TextField fx:id="exitTimeField" promptText="24.04.2026 14:30"
                            GridPane.columnIndex="1" GridPane.rowIndex="2"/>
             </GridPane>
             <HBox spacing="8.0">

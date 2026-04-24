@@ -11,10 +11,13 @@ import repository.InMemoryParkingTicketRepository;
 import service.ParkingLotService;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
 public class ParkingLotController {
+
+    private static final DateTimeFormatter UI_DATE_FORMAT = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     @FXML
     private TextField licensePlateField;
@@ -110,9 +113,9 @@ public class ParkingLotController {
         }
 
         try {
-            return LocalDateTime.parse(exitTimeField.getText().trim());
+            return LocalDateTime.parse(exitTimeField.getText().trim(), UI_DATE_FORMAT);
         } catch (DateTimeParseException ex) {
-            throw new IllegalArgumentException("Exit time format: yyyy-MM-ddTHH:mm");
+            throw new IllegalArgumentException("Exit time format: dd.MM.yyyy HH:mm");
         }
     }
 
@@ -129,6 +132,6 @@ public class ParkingLotController {
         return ticket.getId() + " | " +
                 ticket.getVehicle().getLicensePlate() + " | " +
                 ticket.getStateName() + " | " +
-                ticket.getEntryTime();
+                ticket.getEntryTime().format(UI_DATE_FORMAT);
     }
 }
