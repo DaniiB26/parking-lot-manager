@@ -1,59 +1,90 @@
-# parking-lot-manager
+# Parking Lot Manager
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Aplicatie Java pentru administrarea simpla a tichetelor dintr-o parcare.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+Aplicatia permite:
 
-## Running the application in dev mode
+- crearea unui tichet pentru o masina
+- afisarea tichetelor existente
+- calcularea pretului parcarii
+- plata unui tichet
+- inchiderea unui tichet platit
+- alegerea strategiei de calcul a pretului din UI
 
-You can run your application in dev mode that enables live coding using:
+## Design patterns folosite
 
-```shell script
-./mvnw quarkus:dev
+### Strategy Pattern
+
+Strategy este folosit pentru calcularea pretului parcarii.
+
+Interfata:
+
+- `pricing.PricingStrategy`
+
+Implementari:
+
+- `pricing.HourlyPricingStrategy`
+- `pricing.DailyPricingStrategy`
+- `pricing.NightDiscountPricingStrategy`
+
+`ParkingLotService` foloseste interfata `PricingStrategy`, nu o clasa concreta.
+Astfel, algoritmul de calcul poate fi schimbat fara modificarea logicii din
+service.
+
+### State Pattern
+
+State este folosit pentru starea unui tichet.
+
+Interfata:
+
+- `state.TicketState`
+ 
+Implementari:
+
+- `state.ActiveTicketState`
+- `state.PaidTicketState`
+- `state.ClosedTicketState`
+
+Un tichet nou este `ACTIVE`. Dupa plata devine `PAID`, iar dupa inchidere devine
+`CLOSED`. Tranzitiile invalide, de exemplu inchiderea unui tichet neplatit, sunt
+tratate in clasele de state.
+
+## Principii OOP folosite
+
+- incapsulare: datele din clase sunt private si sunt accesate prin metode
+- abstractizare: service-ul foloseste interfete precum `PricingStrategy` si`IParkingTicketRepository`
+- separarea responsabilitatilor: model, repository, service, pricing, state si ui sunt separate
+
+## Cum se ruleaza
+
+Din folderul proiectului:
+
+```powershell
+mvn javafx:run
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+Nu se recomanda rularea cu butonul simplu `Run Java`, deoarece JavaFX are nevoie
+de configurarea modulelor prin Maven.
 
-## Packaging and running the application
+## Cum se ruleaza testele
 
-The application can be packaged using:
-
-```shell script
-./mvnw package
+```powershell
+mvn test
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+Proiectul contine teste pentru:
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+- strategiile de pret
+- starile tichetului
+- repository-ul in memorie
+- service-ul principal
 
-If you want to build an _über-jar_, execute the following command:
+## Tehnologii
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+- Java 21
+- JavaFX
+- Maven
+- TestNG
+- Lombok
+- Quarkus dependencies
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/parking-lot-manager-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- FX ([guide](https://docs.quarkiverse.io/quarkus-fx/dev/index.html)): A Quarkus extension for JavaFX
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
